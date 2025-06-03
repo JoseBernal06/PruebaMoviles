@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-title class="titulo">Rick and Morty - Buscador</ion-title>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="buscador">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Buscar personaje"
+    />
+    <button class="boton-buscar" (click)="buscarPersonaje()">Buscar</button>
+    <button class="boton-refrescar" (click)="refrescarPersonajes()">Refrescar</button>
+  </div>
+
+  <ion-grid class="contenido">
+    <div *ngFor="let personaje of characters">
+      <ion-card class="card">
+        <ion-card-header>
+          <p class="nombre">{{ personaje.name }}</p>
+          <div class="lugar-pokemon">
+            <img [src]="getImageUrl(personaje)" alt="{{ personaje.name }}" />
+          </div>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label *ngIf="personaje.species">
+            <h2>Especie</h2>
+            <p>{{ personaje.species }}</p>
+          </ion-label>
+          <ion-label *ngIf="personaje.status">
+            <h2>Estado</h2>
+            <p>{{ personaje.status }}</p>
+          </ion-label>
+          <ion-label *ngIf="personaje.origin?.name">
+            <h2>Origen</h2>
+            <p>{{ personaje.origin?.name }}</p>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-grid>
+</ion-content>

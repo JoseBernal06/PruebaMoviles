@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { supabase } from '../supabase.client';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonInput } from '@ionic/angular/standalone';
+import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,11 +22,12 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonInp
     IonInput
   ]
 })
-
 export class ChatPage implements OnInit {
   mensajes: any[] = [];
   mensaje = '';
   user: any;
+
+  constructor(private photoService: PhotoService) {}
 
   async ngOnInit() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -61,26 +63,38 @@ export class ChatPage implements OnInit {
   }
 
   getUbicacion() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.enviarUbicacion(position.coords.latitude, position.coords.longitude);
-      },
-      (error) => {
-        alert('No se pudo obtener la ubicación');
-      }
-    );
-  } else {
-    alert('Geolocalización no soportada');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.enviarUbicacion(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+          alert('No se pudo obtener la ubicación');
+        }
+      );
+    } else {
+      alert('Geolocalización no soportada');
+    }
   }
-}
 
-async enviarUbicacion(lat: number, lng: number) {
-  await supabase.from('mensajes').insert([{
-    usuario_id: this.user.id,
-    nombre: this.user.user_metadata?.['nombre'] || 'Anónimo',
-    foto: this.user.user_metadata?.['foto'] || '',
-    mensaje: `https://www.google.com/maps?q=${lat},${lng}`
-  }]);
-}
+  async enviarUbicacion(lat: number, lng: number) {
+    await supabase.from('mensajes').insert([{
+      usuario_id: this.user.id,
+      nombre: this.user.user_metadata?.['nombre'] || 'Anónimo',
+      foto: this.user.user_metadata?.['foto'] || '',
+      mensaje: `https://www.google.com/maps?q=${lat},${lng}`
+    }]);
+  }
+
+  async mandarFoto() {
+    await this.photoService.addNewToGallery();
+    const foto = this.photoService.photos[0];
+    if (!foto) return;
+    await supabase.from('mensajes').insert([{
+      usuario_id: this.user.id,
+      nombre: this.user.user_metadata?.['nombre'] || 'Anónimo',
+      foto: this.user.user_metadata?.['foto'] || '',
+      mensaje: foto.webviewPath 
+    }]);
+  }
 }

@@ -9,13 +9,18 @@
     <img *ngIf="msg.foto" [src]="msg.foto" alt="foto" style="width:40px;height:40px;border-radius:50%;margin-right:8px;">
     <div>
       <b>{{ msg.nombre }}:</b>
-      <ng-container *ngIf="msg.mensaje.startsWith('https://www.google.com/maps?q='); else textoMensaje">
+      <ng-container *ngIf="msg.mensaje.startsWith('https://www.google.com/maps?q='); else otroMensaje">
         <a [href]="msg.mensaje" target="_blank" style="margin-left:8px;color:#1976d2;text-decoration:underline;">
           Ver ubicación
         </a>
       </ng-container>
-      <ng-template #textoMensaje>
-        {{ msg.mensaje }}
+      <ng-template #otroMensaje>
+        <ng-container *ngIf="msg.mensaje.startsWith('data:image/') || msg.mensaje.endsWith('.jpg') || msg.mensaje.endsWith('.png'); else textoMensaje">
+          <img [src]="msg.mensaje" alt="foto enviada" style="max-width:120px;max-height:120px;border-radius:8px;margin-left:8px;">
+        </ng-container>
+        <ng-template #textoMensaje>
+          {{ msg.mensaje }}
+        </ng-template>
       </ng-template>
     </div>
   </div>
@@ -25,6 +30,7 @@
   </ion-item>
   <div>
     <ion-button (click)="getUbicacion()">Mandar ubicación</ion-button>
-    <ion-button>Mandar foto</ion-button>
+    <ion-button (click)="mandarFoto()">Mandar foto</ion-button>
+    <ion-button>Consumir Api</ion-button>
   </div>
 </ion-content>
