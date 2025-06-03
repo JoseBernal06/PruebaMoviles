@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+  <div *ngIf="foto">
+    <img [src]="foto" alt="Foto de perfil" style="width:120px;height:120px;border-radius:50%;margin:16px auto;display:block;">
+  </div>
+  <p *ngIf="nombre">Bienvenido: {{ nombre }} {{ apellido }}</p>
+</ion-content>

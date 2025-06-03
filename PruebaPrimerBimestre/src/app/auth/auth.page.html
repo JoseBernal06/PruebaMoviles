@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Bienvenido</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <!-- Vista inicial: elegir acción -->
+    <div *ngIf="view === 'inicio'">
+        <ion-button expand="full" (click)="view = 'login'">Login</ion-button>
+        <ion-button expand="full" fill="outline" (click)="view = 'registro'">Registro</ion-button>
+    </div>
+
+    <!-- Formulario de login -->
+    <div *ngIf="view === 'login'">
+        <ion-input [(ngModel)]="email" placeholder="Email"></ion-input>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Contraseña"></ion-input>
+        <ion-button expand="full" (click)="login()">Iniciar sesión</ion-button>
+        <ion-button expand="full" fill="outline" (click)="view = 'inicio'">Volver</ion-button>
+        <p *ngIf="error" style="color: red">{{ error }}</p>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div *ngIf="view === 'registro'">
+        <ion-input [(ngModel)]="nombre" placeholder="Nombre"></ion-input>
+        <ion-input [(ngModel)]="apellido" placeholder="Apellido"></ion-input>
+        <ion-input [(ngModel)]="email" placeholder="Email"></ion-input>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+        <ion-input [(ngModel)]="password" type="password" placeholder="Contraseña"></ion-input>
+        <ion-button expand="full" (click)="register()">Registrarse</ion-button>
+        <ion-button expand="full" fill="outline" (click)="view = 'inicio'">Volver</ion-button>
+        <p *ngIf="error" style="color: red">{{ error }}</p>
+    </div>
+</ion-content>
