@@ -5,9 +5,10 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
   <div *ngIf="foto">
     <img [src]="foto" alt="Foto de perfil" style="width:120px;height:120px;border-radius:50%;margin:16px auto;display:block;">
   </div>
-  <p *ngIf="nombre">Bienvenido: {{ nombre }} {{ apellido }}</p>
+  <p *ngIf="nombre"><b>Bienvenido:</b> {{ nombre }} {{ apellido }}</p>
+  <ion-button expand="full" color="primary" (click)="goToChat()">Ir al chat</ion-button>
+  <ion-button expand="full" color="danger" (click)="logout()">Cerrar sesión</ion-button>
 </ion-content>

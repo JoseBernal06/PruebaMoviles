@@ -38,4 +38,8 @@ export class HomePage implements OnInit {
     await supabase.auth.signOut();
     this.router.navigate(['/auth']);
   }
+
+  goToChat() {
+    this.router.navigate(['/chat']);
+  }
 }

@@ -1,0 +1,31 @@
+
+ion-content{
+    text-align: center;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+ion-button {
+    background-color: #0056b3;
+    color: white;
+    border-radius: 5px;
+    width: auto;
+    height: 50px;
+}
+
+ion-button:hover {
+    background-color: #004494;
+}
+
+ion-footer{
+    background-color: #f8f9fa;
+    padding: 10px;
+
+}
+
+ion-toolbar{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: aqua;
+}
