@@ -8,11 +8,23 @@
   <div *ngFor="let msg of mensajes" style="display:flex;align-items:center;margin-bottom:12px;">
     <img *ngIf="msg.foto" [src]="msg.foto" alt="foto" style="width:40px;height:40px;border-radius:50%;margin-right:8px;">
     <div>
-      <b>{{ msg.nombre }}:</b> {{ msg.mensaje }}
+      <b>{{ msg.nombre }}:</b>
+      <ng-container *ngIf="msg.mensaje.startsWith('https://www.google.com/maps?q='); else textoMensaje">
+        <a [href]="msg.mensaje" target="_blank" style="margin-left:8px;color:#1976d2;text-decoration:underline;">
+          Ver ubicación
+        </a>
+      </ng-container>
+      <ng-template #textoMensaje>
+        {{ msg.mensaje }}
+      </ng-template>
     </div>
   </div>
   <ion-item>
     <ion-input [(ngModel)]="mensaje" placeholder="Escribe un mensaje"></ion-input>
     <ion-button (click)="enviarMensaje()">Enviar</ion-button>
   </ion-item>
+  <div>
+    <ion-button (click)="getUbicacion()">Mandar ubicación</ion-button>
+    <ion-button>Mandar foto</ion-button>
+  </div>
 </ion-content>

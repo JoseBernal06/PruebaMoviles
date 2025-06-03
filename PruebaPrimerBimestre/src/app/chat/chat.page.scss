@@ -29,3 +29,9 @@ ion-toolbar{
     grid-template-columns: repeat(2, 1fr);
     background-color: aqua;
 }
+
+.lugares {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    background-color: #004494;
+}
