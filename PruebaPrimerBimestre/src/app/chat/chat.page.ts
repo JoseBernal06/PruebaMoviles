@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { supabase } from '../supabase.client';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonInput } from '@ionic/angular/standalone';
 import { PhotoService } from '../services/photo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -27,7 +28,10 @@ export class ChatPage implements OnInit {
   mensaje = '';
   user: any;
 
-  constructor(private photoService: PhotoService) {}
+   constructor(
+    private photoService: PhotoService,
+    private router: Router
+  ) {}
 
   async ngOnInit() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -96,5 +100,9 @@ export class ChatPage implements OnInit {
       foto: this.user.user_metadata?.['foto'] || '',
       mensaje: foto.webviewPath 
     }]);
+  }
+
+  irApi() {
+    this.router.navigate(['/api']);
   }
 }

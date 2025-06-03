@@ -21,7 +21,13 @@ export const routes: Routes = [
   path: 'chat',
   loadComponent: () =>
     import('./chat/chat.page').then((m) => m.ChatPage),
+  },
+  {
+    path: 'api',
+    loadComponent: () =>
+      import('./Api/api.page').then((m) => m.ApiPage),
   }
+
 ];
 
 export const appRouting = provideRouter(routes);

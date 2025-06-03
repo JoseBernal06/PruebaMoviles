@@ -42,4 +42,5 @@ export class HomePage implements OnInit {
   goToChat() {
     this.router.navigate(['/chat']);
   }
+
 }
